@@ -14,23 +14,24 @@ ActiveRecord::Schema.define(version: 2023_02_26_131929) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
-    t.string "desc"
+    t.integer "price"
   end
 
   create_table "reviews", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "user_id"
     t.integer "star_rating"
     t.string "comment"
-    t.integer "user_id", null: false
-    t.integer "products_id", null: false
-    t.index ["products_id"], name: "index_reviews_on_products_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_reviews_on_product_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.string "bio"
   end
 
-  add_foreign_key "reviews", "products", column: "products_id"
+  add_foreign_key "reviews", "products"
   add_foreign_key "reviews", "users"
 end
